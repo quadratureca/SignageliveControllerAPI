@@ -7,7 +7,7 @@ namespace SignageliveControllerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlaylistController : ControllerBase
+    public class PlaylistsController : ControllerBase
     {
         // GET: api/<PlaylistController>
         [HttpGet]

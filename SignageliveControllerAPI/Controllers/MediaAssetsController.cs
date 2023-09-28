@@ -7,9 +7,9 @@ namespace SignageliveControllerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MediaAssetController : ControllerBase
+    public class MediaAssetsController : ControllerBase
     {
-        // GET: api/<MediaAssetController>
+        // GET: api/<MediaAssetsController>
         [HttpGet]
         public string Get([FromQuery] string token)
         {
@@ -18,7 +18,7 @@ namespace SignageliveControllerAPI.Controllers
 
             RestClient restClient = new RestClient(networkUrl);
 
-            string request_resource = string.Format("networks/{0}/{1}", networkId, "mediaassets");
+            string request_resource = string.Format("networks/{0}/{1}?limit=1000000", networkId, "mediaassets");
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
             restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));

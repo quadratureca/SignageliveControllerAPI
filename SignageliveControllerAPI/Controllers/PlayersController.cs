@@ -7,9 +7,9 @@ namespace SignageliveControllerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class PlayersController : ControllerBase
     {
-        // GET: api/<UserController>
+        // GET: api/<PlayerController>
         [HttpGet]
         public string Get([FromQuery] string token)
         {
@@ -18,7 +18,7 @@ namespace SignageliveControllerAPI.Controllers
 
             RestClient restClient = new RestClient(networkUrl);
 
-            string request_resource = string.Format("networks/{0}/{1}", networkId, "users");
+            string request_resource = string.Format("networks/{0}/{1}", networkId, "players");
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
             restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
@@ -32,29 +32,27 @@ namespace SignageliveControllerAPI.Controllers
             return "{}";
         }
 
-        // GET api/<UserController>/5
+        // GET api/<PlayerController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(int id, [FromQuery] string token)
         {
-            return "value";
-        }
+            string networkId = "14178";
+            string networkUrl = "https://networkapi.signagelive.com";
 
-        // POST api/<UserController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+            RestClient restClient = new RestClient(networkUrl);
 
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+            string request_resource = string.Format("networks/{0}/{1}/{2}", networkId, "players", id);
 
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            RestRequest restRequest = new RestRequest(request_resource, Method.Get);
+            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Content-Type", "application/json");
+
+            RestResponse response = restClient.Execute(restRequest);
+            if (response.IsSuccessful && response.Content != null)
+            {
+                return response.Content;
+            }
+            return "{}";
         }
     }
 }

@@ -7,9 +7,9 @@ namespace SignageliveControllerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlayerController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        // GET: api/<PlayerController>
+        // GET: api/<UserController>
         [HttpGet]
         public string Get([FromQuery] string token)
         {
@@ -18,7 +18,7 @@ namespace SignageliveControllerAPI.Controllers
 
             RestClient restClient = new RestClient(networkUrl);
 
-            string request_resource = string.Format("networks/{0}/{1}", networkId, "players");
+            string request_resource = string.Format("networks/{0}/{1}", networkId, "users");
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
             restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
@@ -32,27 +32,29 @@ namespace SignageliveControllerAPI.Controllers
             return "{}";
         }
 
-        // GET api/<PlayerController>/5
+        // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id, [FromQuery] string token)
+        public string Get(int id)
         {
-            string networkId = "14178";
-            string networkUrl = "https://networkapi.signagelive.com";
+            return "value";
+        }
 
-            RestClient restClient = new RestClient(networkUrl);
+        // POST api/<UserController>
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
 
-            string request_resource = string.Format("networks/{0}/{1}/{2}", networkId, "players", id);
+        // PUT api/<UserController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
-            RestRequest restRequest = new RestRequest(request_resource, Method.Get);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
-            restRequest.AddHeader("Content-Type", "application/json");
-
-            RestResponse response = restClient.Execute(restRequest);
-            if (response.IsSuccessful && response.Content != null)
-            {
-                return response.Content;
-            }
-            return "{}";
+        // DELETE api/<UserController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
         }
     }
 }
