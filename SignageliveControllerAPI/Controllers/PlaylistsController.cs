@@ -61,14 +61,14 @@ namespace SignageliveControllerAPI.Controllers
 
         // GET api/<PlaylistController>/5
         [HttpGet("{id}")]
-        public string Get(int id, [FromQuery] string token)
+        public string Get(int id, [FromHeader] string authorization)
         {
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}/{2}", networkId, "playlists", id);
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Authorization", authorization);
             restRequest.AddHeader("Content-Type", "application/json");
 
             RestResponse response = restClient.Execute(restRequest);
@@ -81,14 +81,14 @@ namespace SignageliveControllerAPI.Controllers
 
         // POST api/<PlaylistController>
         [HttpPost]
-        public string Post([FromBody] string playlistName, [FromQuery] string token)
+        public string Post([FromBody] string playlistName, [FromHeader] string authorization)
         {
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}", networkId, "playlists");
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Post);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Authorization", authorization);
             restRequest.AddHeader("Content-Type", "application/json");
 
             string json = string.Format(@"{{ ""name"": ""{0}"" }}", playlistName);
@@ -110,14 +110,14 @@ namespace SignageliveControllerAPI.Controllers
 
         // DELETE api/<PlaylistController>/5
         [HttpDelete("{id}")]
-        public string Delete(int id, [FromQuery] string token)
+        public string Delete(int id, [FromHeader] string authorization)
         {
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}/{2}", networkId, "playlists", id);
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Delete);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Authorization", authorization);
             restRequest.AddHeader("Content-Type", "application/json");
 
             RestResponse response = restClient.Execute(restRequest);
