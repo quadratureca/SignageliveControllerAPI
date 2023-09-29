@@ -22,14 +22,14 @@ namespace SignageliveControllerAPI.Controllers
 
         // GET: api/<PlayerController>
         [HttpGet]
-        public string Get([FromQuery] string token)
+        public string Get([FromHeader] string authorization)
         {
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}", networkId, "players");
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Authorization", authorization);
             restRequest.AddHeader("Content-Type", "application/json");
 
             RestResponse response = restClient.Execute(restRequest);
@@ -42,14 +42,14 @@ namespace SignageliveControllerAPI.Controllers
 
         // GET api/<PlayerController>/5
         [HttpGet("{id}")]
-        public string Get(int id, [FromQuery] string token)
+        public string Get(int id, [FromHeader] string authorization)
         {
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}/{2}", networkId, "players", id);
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Authorization", authorization);
             restRequest.AddHeader("Content-Type", "application/json");
 
             RestResponse response = restClient.Execute(restRequest);

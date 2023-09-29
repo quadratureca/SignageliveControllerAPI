@@ -23,7 +23,7 @@ namespace SignageliveControllerAPI.Controllers
 
         // GET: api/<FoldersController>
         [HttpGet]
-        public string Get([FromQuery] string token, string? limit = null, string? type = null)
+        public string Get([FromHeader] string authorization, string? limit = null, string? type = null)
         {
             int notNullCount = 0;
 
@@ -49,7 +49,7 @@ namespace SignageliveControllerAPI.Controllers
             }
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Authorization", authorization);
             restRequest.AddHeader("Content-Type", "application/json");
 
             RestResponse response = restClient.Execute(restRequest);
@@ -62,14 +62,14 @@ namespace SignageliveControllerAPI.Controllers
 
         // GET api/<FoldersController>/5
         [HttpGet("{id}")]
-        public string Get([FromQuery] string token, int id)
+        public string Get([FromHeader] string authorization, int id)
         {
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}/{2}", networkId, "folders", id);
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Authorization", authorization);
             restRequest.AddHeader("Content-Type", "application/json");
 
             RestResponse response = restClient.Execute(restRequest);

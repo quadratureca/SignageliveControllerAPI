@@ -21,14 +21,14 @@ namespace SignageliveControllerAPI.Controllers
         }
 
         [HttpGet("{physicalFileName}")]
-        public string Get([FromQuery] string token, string physicalFileName)
+        public string Get([FromHeader] string authorization, string physicalFileName)
         {
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}?physicalFileName={2}", networkId, "mediaassets/ready", physicalFileName);
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Authorization", authorization);
             restRequest.AddHeader("Content-Type", "application/json");
 
             RestResponse response = restClient.Execute(restRequest);

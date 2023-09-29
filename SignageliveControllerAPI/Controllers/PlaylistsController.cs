@@ -23,7 +23,7 @@ namespace SignageliveControllerAPI.Controllers
 
         // GET: api/<PlaylistController>
         [HttpGet]
-        public string Get([FromQuery] string token, string? limit = null, string? search = null)
+        public string Get([FromHeader] string authorization, string? limit = null, string? search = null)
         {
             int notNullCount = 0;
             RestClient restClient = new RestClient(networkUrl);
@@ -48,7 +48,7 @@ namespace SignageliveControllerAPI.Controllers
             }
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
-            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Authorization", authorization);
             restRequest.AddHeader("Content-Type", "application/json");
 
             RestResponse response = restClient.Execute(restRequest);
