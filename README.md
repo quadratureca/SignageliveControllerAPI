@@ -5,7 +5,7 @@ This is a C# .Net Core proxy for the Signagelive API.
 You will need to provide a Parameters class which provides the following values: ClientId, ClientSecret, NetworkId, AuthorizationCode and NetworkUrl. Some code along the lines of the following will do the trick.
 
 
-`namespace SignageliveControllerAPI
+`namespace SignageliveControllerAPI`
 {
     public interface IParameters
     {
