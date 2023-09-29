@@ -9,13 +9,21 @@ namespace SignageliveControllerAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        string networkId;
+        string networkUrl;
+
+        public UsersController()
+        {
+            IParameters p = new Parameters();
+            Parameters pp = p.GetParameters();
+            networkId = pp.NetworkId;
+            networkUrl = pp.NetWorkUrl;
+        }
+
         // GET: api/<UserController>
         [HttpGet]
         public string Get([FromQuery] string token)
         {
-            string networkId = "14178";
-            string networkUrl = "https://networkapi.signagelive.com";
-
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}", networkId, "users");
@@ -29,14 +37,27 @@ namespace SignageliveControllerAPI.Controllers
             {
                 return response.Content;
             }
-            return "{}";
+            return "[]";
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(int id, [FromQuery] string token)
         {
-            return "value";
+            RestClient restClient = new RestClient(networkUrl);
+
+            string request_resource = string.Format("networks/{0}/{1}/{2}", networkId, "users", id);
+
+            RestRequest restRequest = new RestRequest(request_resource, Method.Get);
+            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Content-Type", "application/json");
+
+            RestResponse response = restClient.Execute(restRequest);
+            if (response.IsSuccessful && response.Content != null)
+            {
+                return response.Content;
+            }
+            return "{}";
         }
 
         // POST api/<UserController>

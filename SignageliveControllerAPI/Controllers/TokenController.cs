@@ -8,7 +8,7 @@ namespace SignageliveControllerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TokenController : ControllerBase, IParameters
+    public class TokenController : ControllerBase
     {
         string clientId;
         string clientSecret;
@@ -31,12 +31,6 @@ namespace SignageliveControllerAPI.Controllers
         [HttpGet]
         public string Get()
         {
-            //string clientId = "0e69f82c66e8";
-            //string clientSecret = "d6b3e9f48518";
-            //string authorizationCode = "fFR1vW/L10iSAEjoOfHMSYqcmiZcuspj";
-            ////string networkId = "14178";
-            //string networkUrl = "https://networkapi.signagelive.com";
-
             RestClient restClient = new RestClient(networkUrl);
             RestRequest restRequest = new RestRequest("token", Method.Post);
             restRequest.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -51,11 +45,6 @@ namespace SignageliveControllerAPI.Controllers
                 return response.Content;
             }
             return "{}";
-        }
-
-        Parameters IParameters.GetParameters()
-        {
-            throw new NotImplementedException();
         }
     }
 }

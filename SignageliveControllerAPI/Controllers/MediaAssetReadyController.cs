@@ -9,12 +9,20 @@ namespace SignageliveControllerAPI.Controllers
     [ApiController]
     public class MediaAssetReadyController : ControllerBase
     {
+        string networkId;
+        string networkUrl;
+
+        public MediaAssetReadyController()
+        {
+            IParameters p = new Parameters();
+            Parameters pp = p.GetParameters();
+            networkId = pp.NetworkId;
+            networkUrl = pp.NetWorkUrl;
+        }
+
         [HttpGet("{physicalFileName}")]
         public string Get([FromQuery] string token, string physicalFileName)
         {
-            string networkId = "14178";
-            string networkUrl = "https://networkapi.signagelive.com";
-
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}?physicalFileName={2}", networkId, "mediaassets/ready", physicalFileName);

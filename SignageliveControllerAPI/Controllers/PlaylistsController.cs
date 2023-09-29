@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,16 +10,42 @@ namespace SignageliveControllerAPI.Controllers
     [ApiController]
     public class PlaylistsController : ControllerBase
     {
+        string networkId;
+        string networkUrl;
+
+        public PlaylistsController()
+        {
+            IParameters p = new Parameters();
+            Parameters pp = p.GetParameters();
+            networkId = pp.NetworkId;
+            networkUrl = pp.NetWorkUrl;
+        }
+
         // GET: api/<PlaylistController>
         [HttpGet]
-        public string Get([FromQuery] string token)
+        public string Get([FromQuery] string token, string? limit = null, string? search = null)
         {
-            string networkId = "14178";
-            string networkUrl = "https://networkapi.signagelive.com";
-
+            int notNullCount = 0;
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}", networkId, "playlists");
+
+            if (limit != null)
+            {
+                notNullCount++;
+                if (notNullCount == 1)
+                    request_resource += string.Format("?limit={0}", limit);
+                else
+                    request_resource += string.Format("&limit={0}", limit);
+            }
+            if (search != null)
+            {
+                notNullCount++;
+                if (notNullCount == 1)
+                    request_resource += string.Format("?search={0}", search);
+                else
+                    request_resource += string.Format("&search={0}", search);
+            }
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
             restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
@@ -29,16 +56,13 @@ namespace SignageliveControllerAPI.Controllers
             {
                 return response.Content;
             }
-            return "{}";
+            return "[]";
         }
 
         // GET api/<PlaylistController>/5
         [HttpGet("{id}")]
         public string Get(int id, [FromQuery] string token)
         {
-            string networkId = "14178";
-            string networkUrl = "https://networkapi.signagelive.com";
-
             RestClient restClient = new RestClient(networkUrl);
 
             string request_resource = string.Format("networks/{0}/{1}/{2}", networkId, "playlists", id);
@@ -57,8 +81,25 @@ namespace SignageliveControllerAPI.Controllers
 
         // POST api/<PlaylistController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public string Post([FromBody] string playlistName, [FromQuery] string token)
         {
+            RestClient restClient = new RestClient(networkUrl);
+
+            string request_resource = string.Format("networks/{0}/{1}", networkId, "playlists");
+
+            RestRequest restRequest = new RestRequest(request_resource, Method.Post);
+            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Content-Type", "application/json");
+
+            string json = string.Format(@"{{ ""name"": ""{0}"" }}", playlistName);
+            restRequest.AddJsonBody<string>(json);
+
+            RestResponse response = restClient.Execute(restRequest);
+            if (response.IsSuccessStatusCode && response.Content != null)
+            {
+                return response.Content;
+            }
+            return "{}";
         }
 
         // PUT api/<PlaylistController>/5
@@ -69,8 +110,22 @@ namespace SignageliveControllerAPI.Controllers
 
         // DELETE api/<PlaylistController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public string Delete(int id, [FromQuery] string token)
         {
+            RestClient restClient = new RestClient(networkUrl);
+
+            string request_resource = string.Format("networks/{0}/{1}/{2}", networkId, "playlists", id);
+
+            RestRequest restRequest = new RestRequest(request_resource, Method.Delete);
+            restRequest.AddHeader("Authorization", string.Concat("bearer", " ", token));
+            restRequest.AddHeader("Content-Type", "application/json");
+
+            RestResponse response = restClient.Execute(restRequest);
+            if (response.IsSuccessful && response.Content != null)
+            {
+                return response.Content;
+            }
+            return "{}";
         }
     }
 }
