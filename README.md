@@ -24,11 +24,11 @@ namespace SignageliveControllerAPI
         {
             Parameters parameters = new Parameters
             {
-                ClientId = "ClientId",
-                ClientSecret = "ClientSecret",
-                NetworkId = "NetworkId",
-                AuthorizationCode = "AuthorizationCode",
-                NetWorkUrl = "NetworkUrl"
+                ClientId = "<Client Id>",
+                ClientSecret = "<Client Secret>",
+                NetworkId = "<Network Id>",
+                AuthorizationCode = "<Authorization Code>",
+                NetWorkUrl = "<Network Url>"
             };
 
             return parameters;
