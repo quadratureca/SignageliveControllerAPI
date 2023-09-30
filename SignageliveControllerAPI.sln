@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignageliveControllerAPI", "SignageliveControllerAPI\SignageliveControllerAPI.csproj", "{73F2BAA6-AFD3-4897-81CE-1F794FBA983D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignageliveAPITest", "SignageliveAPITest\SignageliveAPITest.csproj", "{D9ABDDE5-E6B7-45D4-B1CA-E8EE2035BEE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{73F2BAA6-AFD3-4897-81CE-1F794FBA983D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73F2BAA6-AFD3-4897-81CE-1F794FBA983D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73F2BAA6-AFD3-4897-81CE-1F794FBA983D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9ABDDE5-E6B7-45D4-B1CA-E8EE2035BEE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9ABDDE5-E6B7-45D4-B1CA-E8EE2035BEE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9ABDDE5-E6B7-45D4-B1CA-E8EE2035BEE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9ABDDE5-E6B7-45D4-B1CA-E8EE2035BEE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

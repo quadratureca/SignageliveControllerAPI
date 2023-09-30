@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script src="Scripts/jquery-3.7.1.js"></script>
+    <!--https://localhost:7102/token?credentials={"clientId":"0e69f82c66e8","clientSecret":"d6b3e9f48518","authorizationCode":"fFR1vW/L10iSAEjoOfHMSYqcmiZcuspj"}-->
+
+    <script type="text/javascript">
+        const apiUrl = 'https://sl.quadrature.ca/api';
+        //const apiUrl = 'https://localhost:7276/api';
+        let token;
+        let player;
+        let players;
+        let playlist;
+        let playlists;
+        let mediaasset;
+        let mediaassets;
+        let licence;
+        let licences;
+
+        function getToken() {
+            fetch(apiUrl + '/token')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(t => {
+                    token = t;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(token);
+                    //createPlaylist();
+                    //getPlaylist('622271');
+                    getPlaylists();
+                    //getLicence('89223');
+                    //getPlayers();
+                    //getPlayer('99980');
+                    //getMediaAssets();
+                });
+        }
+
+        function getPlaylist(playlistId) {
+            fetch(apiUrl + '/playlists/' + playlistId + '?token=' + token.access_token)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(p => {
+                    playlist = p;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(playlist);
+                });
+        }
+
+        function deletePlaylist() {
+            const requestOptions = {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                //body: JSON.stringify({ notplaylistName: 'Phil - Test Playlist' }) 
+                body: JSON.stringify('Phil - Test Playlist')
+            };
+
+            fetch(apiUrl + '/playlists' + '?token=' + token.access_token, requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(l => {
+                    licence = l;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(licence);
+                });
+        }
+
+        function createPlaylist(playlistName) {
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                //body: JSON.stringify({ notplaylistName: 'Phil - Test Playlist' }) 
+                body: JSON.stringify('Phil - Test Playlist')  
+            };
+
+            fetch(apiUrl + '/playlists' + '?token=' + token.access_token, requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(p => {
+                    playlist = p;
+
+
+
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    //console.log(playlist);
+                });
+        }
+
+        function getLicence(licenceId) {
+            fetch(apiUrl + '/licences/' + licenceId + '?token=' + token.access_token)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(l => {
+                    licence = l;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(licence);
+                });
+        }
+
+        function getLicences() {
+            fetch(apiUrl + '/licences/summary?token=' + token.access_token)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(l => {
+                    licences = l;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(licences);
+                    //    $.each(licences, function (index, licence) {
+                    //        console.log(licence);
+                    //    })
+                });
+        }
+
+        function getMediaAsset(mediaAssetId) {
+            fetch(apiUrl + '/mediaassets/' + mediaAssetId + '?token=' + token.access_token)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(m => {
+                    mediaAsset = m;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(player);
+                });
+        }
+
+        function getMediaAssets() {
+            fetch(apiUrl + '/mediaassets?token=' + token.access_token + '&limit=10000&types=image')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(m => {
+                    mediaassets = m;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(mediaassets);
+                    //    $.each(mediaassets, function (index, mediaasset) {
+                    //        console.log(mediaasset);
+                    //    })
+                });
+        }
+
+        function getPlayer(playerId) {
+            fetch(apiUrl + '/players/' + playerId + '?token=' + token.access_token)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(p => {
+                    player = p;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(player);
+                });
+        }
+
+        function getPlayers() {
+            fetch(apiUrl + '/players?token=' + token.access_token)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(p => {
+                    players = p;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(players);
+                    $.each(players, function (index, player) {
+                        console.log(player.site.name);
+                    })
+                });
+        }
+
+        function getPlaylist(playlistId) {
+            fetch(apiUrl + '/playlists/' + playlistId + '?token=' + token.access_token)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(p => {
+                    playlist = p;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(playlist);
+                });
+        }
+
+        function getPlaylists() {
+            const headers = {
+                'authorization': 'bearer ' + token.access_token
+            };
+            fetch(apiUrl + '/playlists?limit=100&search=milton toyota', {headers})
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(p => {
+                    playlists = p;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    console.log(playlists);
+                });
+        }
+
+        $(function () {
+            setTimeout(getToken, 5);
+        });
+    </script>
+</body>
+</html>

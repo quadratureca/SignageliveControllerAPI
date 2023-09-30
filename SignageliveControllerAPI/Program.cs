@@ -1,4 +1,6 @@
 
+using Microsoft.AspNetCore.HttpOverrides;
+
 namespace SignageliveControllerAPI
 {
     public class Program
@@ -17,8 +19,8 @@ namespace SignageliveControllerAPI
                                       {
                                           policy.AllowAnyHeader()
                                                 .AllowAnyMethod()
-                                                //.WithOrigins("https://localhost:44312")
-                                                .AllowAnyOrigin()
+                                                .WithOrigins("https://localhost:44312")
+                                                //.AllowAnyOrigin()
                                                 ;
                                       });
             });
@@ -31,6 +33,12 @@ namespace SignageliveControllerAPI
             builder.Services.AddScoped<IParameters, Parameters>();
 
             var app = builder.Build();
+
+            // Using reverse proxy
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
