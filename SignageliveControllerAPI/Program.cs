@@ -19,8 +19,8 @@ namespace SignageliveControllerAPI
                                       {
                                           policy.AllowAnyHeader()
                                                 .AllowAnyMethod()
-                                                .WithOrigins("https://localhost:44312")
-                                                //.AllowAnyOrigin()
+                                                //.WithOrigins("https://localhost:44312")
+                                                .AllowAnyOrigin()
                                                 ;
                                       });
             });

@@ -20,7 +20,7 @@ namespace SignageliveControllerAPI.Controllers
             networkUrl = pp.NetWorkUrl;
         }
 
-        [HttpGet("{physicalFileName}")]
+        [HttpGet]
         public string Get([FromHeader] string authorization, string physicalFileName)
         {
             RestClient restClient = new RestClient(networkUrl);

@@ -9,8 +9,8 @@
     <!--https://localhost:7102/token?credentials={"clientId":"0e69f82c66e8","clientSecret":"d6b3e9f48518","authorizationCode":"fFR1vW/L10iSAEjoOfHMSYqcmiZcuspj"}-->
 
     <script type="text/javascript">
-        const apiUrl = 'https://sl.quadrature.ca/api';
-        //const apiUrl = 'https://localhost:7276/api';
+        //const apiUrl = 'https://sl.quadrature.ca/api';
+        const apiUrl = 'https://localhost:7276/api';
         let token;
         let player;
         let players;
@@ -39,16 +39,19 @@
                     console.log(token);
                     //createPlaylist();
                     //getPlaylist('622271');
-                    getPlaylists();
+                    //getPlaylists();
                     //getLicence('89223');
                     //getPlayers();
                     //getPlayer('99980');
-                    //getMediaAssets();
+                    getMediaAssets();
                 });
         }
 
         function getPlaylist(playlistId) {
-            fetch(apiUrl + '/playlists/' + playlistId + '?token=' + token.access_token)
+            const headers = {
+                'authorization': token.token_type + ' ' + token.access_token
+            };
+            fetch(apiUrl + '/playlists/' + playlistId, headers)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -69,12 +72,15 @@
         function deletePlaylist() {
             const requestOptions = {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                //body: JSON.stringify({ notplaylistName: 'Phil - Test Playlist' }) 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': token.token_type + ' ' + token.access_token
+                },
+                //body: JSON.stringify({ notplaylistName: 'Phil - Test Playlist' })
                 body: JSON.stringify('Phil - Test Playlist')
             };
 
-            fetch(apiUrl + '/playlists' + '?token=' + token.access_token, requestOptions)
+            fetch(apiUrl + '/playlists', requestOptions)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -95,12 +101,15 @@
         function createPlaylist(playlistName) {
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                //body: JSON.stringify({ notplaylistName: 'Phil - Test Playlist' }) 
-                body: JSON.stringify('Phil - Test Playlist')  
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': token.token_type + ' ' + token.access_token
+                },
+                //body: JSON.stringify({ notplaylistName: 'Phil - Test Playlist' })
+                body: JSON.stringify('Phil - Test Playlist')
             };
 
-            fetch(apiUrl + '/playlists' + '?token=' + token.access_token, requestOptions)
+            fetch(apiUrl + '/playlists', requestOptions)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -122,7 +131,10 @@
         }
 
         function getLicence(licenceId) {
-            fetch(apiUrl + '/licences/' + licenceId + '?token=' + token.access_token)
+            const headers = {
+                'authorization': token.token_type + ' ' + token.access_token
+            };
+            fetch(apiUrl + '/licences/' + licenceId, { headers })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -141,7 +153,10 @@
         }
 
         function getLicences() {
-            fetch(apiUrl + '/licences/summary?token=' + token.access_token)
+            const headers = {
+                'authorization': token.token_type + ' ' + token.access_token
+            };
+            fetch(apiUrl + '/licences/summary', { headers })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -163,7 +178,10 @@
         }
 
         function getMediaAsset(mediaAssetId) {
-            fetch(apiUrl + '/mediaassets/' + mediaAssetId + '?token=' + token.access_token)
+            const headers = {
+                'authorization': token.token_type + ' ' + token.access_token
+            };
+            fetch(apiUrl + '/mediaassets/' + mediaAssetId, { headers })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -182,7 +200,10 @@
         }
 
         function getMediaAssets() {
-            fetch(apiUrl + '/mediaassets?token=' + token.access_token + '&limit=10000&types=image')
+            const headers = {
+                'authorization': token.token_type + ' ' + token.access_token
+            };
+            fetch(apiUrl + '/mediaassets?limit=500&types=video&search=Milton Toyota', { headers })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -204,7 +225,10 @@
         }
 
         function getPlayer(playerId) {
-            fetch(apiUrl + '/players/' + playerId + '?token=' + token.access_token)
+            const headers = {
+                'authorization': token.token_type + ' ' + token.access_token
+            };
+            fetch(apiUrl + '/players/' + playerId, { headers })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -223,7 +247,10 @@
         }
 
         function getPlayers() {
-            fetch(apiUrl + '/players?token=' + token.access_token)
+            const headers = {
+                'authorization': token.token_type + ' ' + token.access_token
+            };
+            fetch(apiUrl + '/players', { headers })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -245,7 +272,10 @@
         }
 
         function getPlaylist(playlistId) {
-            fetch(apiUrl + '/playlists/' + playlistId + '?token=' + token.access_token)
+            const headers = {
+                'authorization': token.token_type + ' ' + token.access_token
+            };
+            fetch(apiUrl + '/playlists/' + playlistId, { headers })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -265,9 +295,9 @@
 
         function getPlaylists() {
             const headers = {
-                'authorization': 'bearer ' + token.access_token
+                'authorization': token.token_type + ' ' + token.access_token
             };
-            fetch(apiUrl + '/playlists?limit=100&search=milton toyota', {headers})
+            fetch(apiUrl + '/playlists?limit=100&search=milton toyota', { headers })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -286,7 +316,7 @@
         }
 
         $(function () {
-            setTimeout(getToken, 5);
+            setTimeout(getToken, 5000);
         });
     </script>
 </body>

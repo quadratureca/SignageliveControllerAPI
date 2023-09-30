@@ -64,8 +64,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="APITest.html" />
+    <Content Include="index.html" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="favicon.ico" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />

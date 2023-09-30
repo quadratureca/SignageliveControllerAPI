@@ -21,7 +21,7 @@ namespace SignageliveControllerAPI.Controllers
         }
         // GET: api/<MediaAssetsController>
         [HttpGet]
-        public string Get([FromHeader] string authorization, string? limit = null, string? types = null)
+        public string Get([FromHeader] string authorization, string? limit = null, string? types = null, string? search = null)
         {
             int notNullCount = 0;
 
@@ -44,6 +44,14 @@ namespace SignageliveControllerAPI.Controllers
                     request_resource += string.Format("?types={0}", types);
                 else
                     request_resource += string.Format("&types={0}", types);
+            }
+            if (search != null)
+            {
+                notNullCount++;
+                if (notNullCount == 1)
+                    request_resource += string.Format("?search={0}", search);
+                else
+                    request_resource += string.Format("&search={0}", search);
             }
 
             RestRequest restRequest = new RestRequest(request_resource, Method.Get);
